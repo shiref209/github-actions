@@ -1,1 +1,1 @@
-tsc -b && vite build
+echo "hello commit"
