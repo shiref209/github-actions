@@ -1,1 +1,2 @@
 echo "hello commit23"
+lint-staged
