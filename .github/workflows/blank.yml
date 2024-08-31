@@ -5,20 +5,20 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3   
-  # Use a compatible version (e.g., v3)
-        with:
-          node-version: '20'
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'  # Ensure this matches your project's Node version
 
-      - run: npm install  # Install project dependencies
+    - name: Install dependencies
+      run: yarn install
 
-      - run: npm install vite  # Optional, if Vite is not installed globally
-
-      - name: Run TypeScript build
-        run: tsc -b && vite build
+    - name: Build the app
+      run: yarn build
