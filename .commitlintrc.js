@@ -1,32 +1,17 @@
 module.exports = {
   extends: ["@commitlint/config-conventional"],
+  parserPreset: {
+    parserOpts: {
+      issuePrefixes: ["#"],
+    },
+  },
   rules: {
-    "type-enum": [
-      2,
-      "always",
-      [
-        "feat",
-        "fix",
-        "docs",
-        "refactor",
-        "test",
-        "chore",
-        "build",
-        "ci",
-        "style",
-      ],
-    ],
+    "references-empty": [2, "never"], // Validate for issue/ticket numbers
+    "subject-case": [2, "always", ["lower-case"]],
     "scope-enum": [
       2,
       "always",
-      ["component", "feature", "api", "ui", "fix", "chore", "build"],
+      ["wip", "configs", "formatting", "code", "deployment", "tests"],
     ],
-    "subject-case": [2, "always", "lower-case"],
-    "subject-empty": [2, "never"],
-    "subject-full-stop": [2, "never"],
-    "body-max-line-length": [2, "always", 80],
-    "body-empty": [2, "never"],
-    "footer-max-line-length": [2, "always", 80],
-    "header-max-line-length": [2, "always", 80],
   },
 };
