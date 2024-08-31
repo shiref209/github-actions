@@ -1,2 +1,27 @@
-lint-staged
-npx --no -- commitlint --edit $1
+#!/bin/bash
+
+# Function to check commit message format
+check_commit_message() {
+    local commit_msg=$(cat "$1" | tr -d '\r' | tr -d '\n')
+    local pattern="^(feat|fix|docs|style|refactor|test|chore)(\([a-zA-Z0-9 ]+\))?: .{1,50}$"
+
+    echo "Debug: Commit message read: '$commit_msg'"  # Debugging output
+
+    if ! echo "$commit_msg" | grep -qE "$pattern"; then
+        echo "Error: Invalid commit message format."
+        echo "Commit message should follow the format: <type>(<scope>): <subject>"
+        echo "Types: feat, fix, docs, style, refactor, test, chore"
+        echo "Scope is optional and should be in parentheses if present"
+        echo "Subject should be no more than 50 characters"
+        exit 1
+    fi
+}
+
+# Check the commit message
+check_commit_message .git/COMMIT_EDITMSG
+
+# Additional check for 'll' in commit message
+if grep -q "ll" .git/COMMIT_EDITMSG; then
+    echo "Error: Commit message contains 'll', which is not allowed."
+    exit 1
+fi
