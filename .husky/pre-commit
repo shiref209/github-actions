@@ -1,2 +1,2 @@
-echo "hello commit23"
-lint-staged
+@REM echo "hello commit23"
+@REM lint-staged
