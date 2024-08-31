@@ -9,16 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'  # Ensure this matches your project's Node version
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    - name: Install dependencies
-      run: yarn install
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('subdir/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Build the app
-      run: yarn build
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the app
+        run: yarn build
